@@ -1,0 +1,23 @@
+FROM microsoft/aspnetcore-build
+
+# copy corrent directory (.) in /src in the docker container
+ADD . /src
+
+# set working directory
+WORKDIR /src
+
+# restore in the container
+RUN dotnet restore
+
+# publish in /app directory in the container
+RUN dotnet publish -o /app
+
+# set working directory
+WORKDIR /app
+
+# set entry point
+ENTRYPOINT ["dotnet", "TraceService.dll"]
+
+# to build the container:
+# $ docker -t <name:tag> .
+
